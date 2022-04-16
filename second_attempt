@@ -1,0 +1,58 @@
+def open_file():
+    input_readable = False
+    while input_readable == False:
+        try: 
+            input_filename = input("Input a file name:")
+            fp = open(input_filename, "r")
+            while fp:
+
+
+               # if not line:
+                 #   break
+                return fp
+        except FileNotFoundError:
+            print("Something went wrong when opening this file. Try Again.")
+        else:
+            input_readable = True
+open_file()
+
+
+
+var = open_file()
+def read_data(f):
+    fp = f.readline().split()
+
+    for i in range(len(fp)):
+        for word in fp[i]:
+            fp[i] = fp[i].replace(word, word.lower())
+        
+    import string
+    punctuations = string.punctuation
+    for i in range(len(fp)):
+        for word in fp[i]:
+            if word in punctuations:
+                fp[i] = fp[i].replace(word, "")
+    
+    for i in range(len(fp)):
+        for word in fp[i]:
+            if word.isalpha() == False:
+                fp[i] = fp[i].replace(word, " ")
+    
+   
+    for i in range(len(fp)):
+        for word in fp[i]:
+            if len(fp[i]) == 1:
+                fp[i] = fp[i].replace(word, "")
+    #print(len(fp[5]))
+
+    counter = {}
+    #for i in range(len(fp)):
+    for word in fp:
+        if word in counter:
+            counter[word] += 1
+        else: counter[word] = 1
+    print(counter)
+
+    return(fp)
+var2= read_data(var)
+var2
