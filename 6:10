@@ -1,0 +1,102 @@
+def open_file():
+    input_readable = False
+    while input_readable == False:
+        try: 
+            f = input("Input a file name:")
+            fp = open(f, "r")
+            while fp:
+
+
+               # if not line:
+                 #   break
+                return fp
+        except FileNotFoundError:
+            print("Something went wrong when opening this file. Try Again.")
+        else:
+            input_readable = True
+open_file()
+        
+    
+    var = open_file()
+#closest version of 2
+def read_data(fp):
+    #fp=open_file()
+    fp=fp.readlines()
+    #lowercase
+    for i in range(len(fp)):
+        for word in fp[i]:
+            fp[i]=fp[i].replace(word,word.lower())
+    #punctuation
+    import string
+    punctuations = string.punctuation
+    for i in range(len(fp)):
+        for word in fp[i]:
+            if word in punctuations:
+                fp[i]=fp[i].replace(word,"")
+    #isalpha
+    for i in range(len(fp)):
+        for word in fp[i]:
+            words=[word for word in fp[i] if word.isalpha()]
+            result=''.join(words)
+    #split
+    #split=fp.read().replace("\n","").split(' ')
+    [i.split(' ', 1)[0] for i in fp]
+    
+    for h in range(len(fp)):
+        fp[h] = fp[h].replace('\n','')
+    
+    #dictionary
+    def dictionary(fp):
+        words=[]
+        oldD={}
+        for line in fp:
+            words=words+line.split(' ')
+
+        for j in words:
+            if j not in oldD:
+                oldD[j]=[]
+                for i in range(len(fp)):
+                    if j in fp[i]:
+                        oldD[j].append(i)
+        D = {k:oldD[k] for k in oldD if len(k)>2}
+        return (D)
+    c=dictionary(fp)
+    return (c)
+    #don't need this print but just to test 
+
+    return(fp)
+var2 = read_data(var)
+var2
+
+
+
+def find_cooccurance(D, inp_str):
+    ls=inp_str.split(" ")
+    result=set()
+    print("The co-occurance for:", ls)
+    print("Lines: ")
+    for i in ls:
+        if i not in D.keys():
+            print("no")
+            return
+        else:
+            if len(result)==0:
+                result.update(D[i])
+            else:
+                result.intersection_update(D[i])
+    x = print(", ".join(st(e) for e in result))
+    return x
+
+
+def main():
+    fp=open_file()
+    d=read_data(fp)
+    inp=""
+    while True:
+        inp=input("Enter space-seperated words: ")
+        if inp=='q' or inp=='Q':
+            break
+        find_cooccurance(var2, inp)
+
+if __name__=="__main__":
+    main()
